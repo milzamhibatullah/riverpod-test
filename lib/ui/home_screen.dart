@@ -25,18 +25,24 @@ class HomeScreen extends ConsumerWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: movies.when(
-            data:(Movie movie)=> movie==null || movie.search!.isEmpty?Center(
-              child: TextButton(
-                onPressed: ()async {
+            /// when movie is null or empty
+            data: (Movie movie) => movie == null || movie.search!.isEmpty
+                ? Center(
+                    child: TextButton(
+                      onPressed: () async {
+                        ///ref refresh to start fetch movies again
+                        ref.refresh(movieProvider);
+                      },
+                      child: const Text('Fetch Data'),
+                    ),
+                  )
+                :
 
-                },
-                child: const Text('Fetch Data'),
-              ),
-            )
-                : Center(
-              child: Text(
-                  'data is fetched with length : ${movie.search!.length}'),
-            ),
+                ///if data is exist
+                Center(
+                    child: Text(
+                        'data is fetched with length : ${movie.search!.length}'),
+                  ),
             error: (error, stack) => const Center(
               child: Text('error when fetching'),
             ),

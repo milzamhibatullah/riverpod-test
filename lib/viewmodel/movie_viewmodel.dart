@@ -13,7 +13,9 @@ final moviesServiceProvider = Provider<MovieService>((ref) => MovieService());
 
 ///define future provider to interact with view/ui
 final movieProvider = FutureProvider<Movie>((ref){
+  /// create movie service object and attach to ref
   final movieService = ref.watch(moviesServiceProvider);
+  /// fetch data movies
   return movieService.loadMovies();
 });
 
